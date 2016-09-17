@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "worker_src/c/getAccelData.h"
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
@@ -64,7 +65,8 @@ static void init(){
   update_time();
   
   //Register with TickTimerService
-  tick_timer_service_subscsribe(MINUTE_UNIT, tick_handler);
+  //tick_timer_service_subscsribe(MINUTE_UNIT, tick_handler);
+  accel_tap_service_subscribe(accel_data_handler);
 }
 
 static void deinit(){
@@ -76,4 +78,5 @@ int main(void){
   init();
   app_event_loop();
   deinit();
+  
 }
