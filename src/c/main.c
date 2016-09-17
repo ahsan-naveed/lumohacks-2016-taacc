@@ -20,6 +20,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   update_time();
 }
 
+//Just a comment
+
 static void main_window_load(Window *window){
   //Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
