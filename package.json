@@ -1,0 +1,21 @@
+{
+    "author": "tristanm@sfu.ca",
+    "dependencies": {},
+    "keywords": [],
+    "name": "test-project",
+    "pebble": {
+        "displayName": "Test Project",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "uuid": "041556f5-ae0d-4b44-8768-feb3e9cb2b5e",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
