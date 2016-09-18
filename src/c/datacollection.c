@@ -1,19 +1,22 @@
 #include <pebble.h>
 #include "datacollection.h"
 #include "datatransmission.h"
+#include "collectiondata.h"
 
 static bool MOVEMENT_END_STATE = false;
 
 int int_itr = 0;
 
 void hold_still(){
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Waiting for movement to stop");
   psleep(3000);
 }
 
 
 //Proper implementation when Amir gets his data through
-int data_collection(){
-  return 42;
+MEASUREMENTS data_collection(){
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Performing data collection");
+  return getStats();
 }
 
 
@@ -92,4 +95,5 @@ void perform_movement(){
     persist_write_bool(1,true);
     MOVEMENT_END_STATE = true;
   }
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Data collected is: %d %d %d", data_collected[int_itr].angle, data_collected[int_itr].range, data_collected[int_itr].motion);
 }

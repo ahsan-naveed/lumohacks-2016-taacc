@@ -13,7 +13,8 @@ bool comm_is_js_ready();
 void send_collected_data();
 
 //Messaging Handlers
-void message_inbox_received(DictionaryIterator *iterator, void *context);
+//void message_inbox_received(DictionaryIterator *iterator, void *context);
+void message_inbox_received();
 void message_inbox_dropped(AppMessageResult reason, void *context);
 void message_outbox_sent(DictionaryIterator *iterator, void *context);
 void message_outbox_failed(DictionaryIterator *iterator, AppMessageResult reason, void *context);

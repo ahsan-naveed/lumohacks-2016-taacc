@@ -1,14 +1,15 @@
 #pragma once
 #include <pebble.h>
+#include "collectiondata.h"
 
 
-int data_collected[31];
+MEASUREMENTS data_collected[2];
 
 void hold_still();
 
 //Make sure to change this to what Amir is sending you
 //Placeholder function
-int data_collection();
+MEASUREMENTS data_collection();
 
 //Get preop mobility
 //void motion_testing_preop();

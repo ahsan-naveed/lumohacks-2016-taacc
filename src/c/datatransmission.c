@@ -10,6 +10,7 @@ static bool s_js_ready = false;
 extern int int_itr;
 //Return js comm status
 bool comm_is_js_ready(){
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Comms boolean reports ready");
   return s_js_ready;
 }
 
@@ -43,7 +44,7 @@ void send_collected_data(){
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Error preparing the outbox: %d", result);
   }
 }
-
+/*
 void message_inbox_received(DictionaryIterator *iterator, void *context){
   Tuple *ready_tuple = dict_find(iterator, MESSAGE_KEY_JSReady);
   if(ready_tuple){
@@ -51,7 +52,17 @@ void message_inbox_received(DictionaryIterator *iterator, void *context){
     s_js_ready = true;
     perform_movement();
   }  
+}*/
+
+//Placeholder for above
+void message_inbox_received(){
+  if(true){
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "PebbleKit is ready");
+    s_js_ready = true;
+    perform_movement();
+  }
 }
+
 void message_inbox_dropped(AppMessageResult reason, void *context){
    APP_LOG(APP_LOG_LEVEL_DEBUG, "App Message Dropped for reason: %d", reason);
 }

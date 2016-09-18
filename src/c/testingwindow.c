@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "testingwindow.h"
 #include "datacollection.h"
+#include "datatransmission.h"
 #define ORIGINAL_DATA_COLLECTION_KEY 1
 #define DEVELOPER 1
 
@@ -23,6 +24,7 @@ void test_window_load(Window *window){
   layer_add_child(window_layer, text_layer_get_layer(s_test_text));
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Test Window Loaded");
+  message_inbox_received();
 } 
 
 void test_window_unload(Window *window){
