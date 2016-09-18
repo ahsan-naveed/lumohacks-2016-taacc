@@ -1,82 +1,51 @@
 #include <pebble.h>
-#include "worker_src/c/getAccelData.h"
+ 
+static Window* window;
+static TextLayer *accel_layer;
 
-static Window *s_main_window;
-static TextLayer *s_time_layer;
-
-static void update_time(){
-  //get a time structure
-  time_t temp = time(NULL);
-  struct tm *tick_time = localtime(&temp);
-  
-  //Write current hours and minutes into a buffer
-  static char s_buffer[8];
-  strftime(s_buffer, sizeof(s_buffer), clock_is_24h_style() ? "%H:%M" : "%I:%M", tick_time);
-  
-  //Display this onto the TextLayer
-  text_layer_set_text(s_time_layer, s_buffer);
+static void window_load(Window *window)
+{
+ //Setup Accel Layer
+accel_layer = text_layer_create(GRect(5, 45, 144, 30));
+text_layer_set_font(accel_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+text_layer_set_text(accel_layer, "Accel tap: N/A");
+layer_add_child(window_get_root_layer(window), text_layer_get_layer(accel_layer));
 }
-
-static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
-  update_time();
+ 
+static void window_unload(Window *window)
+{
+ text_layer_destroy(accel_layer);
 }
-
-//Just a comment
-
-static void main_window_load(Window *window){
-  //Get information about the Window
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
-  
-  //Create the text layer with specified bounds
-  s_time_layer = text_layer_create(
-    GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
-  
-  //Make it more like a watch face
-  text_layer_set_background_color(s_time_layer, GColorClear);
-  text_layer_set_text_color(s_time_layer, GColorBlack);
-  text_layer_set_text(s_time_layer, "00:00");
-  text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
-  text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
-  
-  //Add it as a child layer to the Window's root layer
-  layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
+static void accel_raw_handler(AccelData *data, uint32_t num_samples)
+{
+  static char buffer[] = "XYZ: 9999 / 9999 / 9999";
+  snprintf(buffer, sizeof("XYZ: 9999 / 9999 / 9999"), "XYZ: %d / %d / %d", data[0].x, data[0].y, data[0].z);
+  text_layer_set_text(accel_layer, buffer);
 }
-
-static void main_window_unload(Window *window){
-  //Destroy the text layer
-  text_layer_destroy(s_time_layer);
+ 
+static void init()
+{
+  window = window_create();
+  WindowHandlers handlers = {
+    .load = window_load,
+    .unload = window_unload
+  };
+  window_set_window_handlers(window, (WindowHandlers) handlers);
+  window_stack_push(window, true);
+  //Subscribe to AccelerometerService (uncomment one to choose)
+//accel_tap_service_subscribe(accel_tap_handler);
+accel_data_service_subscribe(1, accel_raw_handler);
 }
-
-static void init(){
-  //Create main window element and assign it to the pointer
-  s_main_window = window_create();
-  
-  //Set handlers to manage the elements inside the window
-  window_set_window_handlers(s_main_window, (WindowHandlers){
-    .load = main_window_load,
-    .unload = main_window_unload
-  });
-  
-  //Show the window on the watach
-  window_stack_push(s_main_window, true);
-  
-  //Make sure the time is displayed from the start
-  update_time();
-  
-  //Register with TickTimerService
-  //tick_timer_service_subscsribe(MINUTE_UNIT, tick_handler);
-  accel_tap_service_subscribe(accel_data_handler);
+ 
+static void deinit()
+{
+  window_destroy(window);
 }
-
-static void deinit(){
-  //Destroy window
-  window_destroy(s_main_window);
-}
-
-int main(void){
+ 
+int main(void)
+{
   init();
   app_event_loop();
   deinit();
-  
 }
+
