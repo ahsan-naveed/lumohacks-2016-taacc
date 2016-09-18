@@ -30,18 +30,18 @@ void test_window_unload(Window *window){
   text_layer_destroy(s_test_text);
 }
 
-void persistent_storage_decision(){
+/*void persistent_storage_decision(){
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Entering persistent storage decision making");
   if(persist_exists(ORIGINAL_DATA_COLLECTION_KEY)){
     //Update flag for initial data collection
-    persist_write_bool(1,true);
+    
     #ifdef DEVELOPER
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Dev mode enabled");
     persist_write_bool(1,false);
     #endif
-    motion_testing_postop();
+//    motion_testing_postop();
   }
   else{
-    motion_testing_preop();
+//    motion_testing_preop();
   }
-}
+}*/

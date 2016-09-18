@@ -11,10 +11,10 @@ void hold_still();
 int data_collection();
 
 //Get preop mobility
-void motion_testing_preop();
+//void motion_testing_preop();
 
 //Main mobility testing logic
-void motion_testing_postop();
+//void motion_testing_postop();
 
-//Send out data to the phone
-bool send_data();
+
+void perform_movement();

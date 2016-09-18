@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #include "instructionwindow.h"
 #include "testingwindow.h"
+#include "datacollection.h"
+#include "datatransmission.h"
 
 
 void main_window_click_handler(ClickRecognizerRef recognizer, void *context);
@@ -19,8 +21,6 @@ int main(void){
 void window_click_handler(ClickRecognizerRef recognizer, void *context){
   if(window_stack_contains_window(s_instruction_window)){
     window_stack_push(s_test_window, true);
-    //Start logic
-    persistent_storage_decision();
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Pushed test window to top");
   }
   else{
@@ -72,6 +72,9 @@ static void init(){
   window_set_click_config_provider(s_instruction_window, (ClickConfigProvider) window_click_provider);
   
   //Open app messaging
+  app_message_register_inbox_received(message_inbox_received);
+  app_message_register_inbox_dropped(message_inbox_dropped);
+  app_message_register_outbox_failed(message_outbox_failed);
   
   app_message_open(inbox_size, outbox_size);
   
