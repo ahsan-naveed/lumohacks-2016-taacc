@@ -8,9 +8,11 @@ enum Motion
   UNDERCOOKED
 };
 
-struct measurements
+typedef struct measurements
 {
   int range;
   int angle;
-  Motion motion;
-};
+  enum Motion motion;
+} measurements;
+
+measurements getStats();
