@@ -12,7 +12,7 @@ int int_itr = 0;
 
 void hold_still(){
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Waiting for movement to stop");
-  psleep(3000);
+  psleep(4000);
 }
 
 

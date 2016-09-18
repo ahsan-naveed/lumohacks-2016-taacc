@@ -16,7 +16,7 @@ void test_window_load(Window *window){
   s_test_text = text_layer_create(GRect(0,0,144,154));
   text_layer_set_background_color(s_test_text, GColorClear);
   text_layer_set_text_color(s_test_text, GColorBlack);
-  text_layer_set_text(s_test_text, "Now watch your phone for instructions.");
+  text_layer_set_text(s_test_text, "All done! View phone for data.");
   text_layer_set_font(s_test_text, fonts_get_system_font(FONT_KEY_GOTHIC_24));
   text_layer_set_text_alignment(s_test_text, GTextAlignmentCenter);
   
