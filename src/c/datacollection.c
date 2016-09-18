@@ -1,7 +1,9 @@
 #include <pebble.h>
 #include "datacollection.h"
 #include "datatransmission.h"
-#include "collectiondata.h"
+#include "math.h"
+
+#define PI 3.14159265
 
 static bool MOVEMENT_END_STATE = false;
 
@@ -17,6 +19,35 @@ void hold_still(){
 MEASUREMENTS data_collection(){
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Performing data collection");
   return getStats();
+}
+
+//Calculate the arc length of movement
+int calculateRange(int angle)
+{
+  int radians = angle * PI / 180;
+  int ran = 2 * PI * radians;
+  return(ran);
+}
+
+// Calculate the angle that is seen at the first position
+int calculateAngle()
+{
+  int angle = 0;
+  CompassHeadingData data;
+  compass_service_peek(&data);
+  angle = TRIGANGLE_TO_DEG(TRIG_MAX_ANGLE - data.magnetic_heading);
+  return(angle);
+}
+
+MEASUREMENTS getStats()
+{
+  MEASUREMENTS stats;
+  enum Motion movement = EASY_OVER;
+  stats.angle = calculateAngle();
+  stats.range = calculateRange(stats.angle);
+  stats.motion = movement; // Definitely want to change this bad boy
+  //APP_LOG(APP_LOG_LEVEL_DEBUG, "angle %d, range %d", stats.angle, stats.range);
+  return(stats);
 }
 
 
@@ -84,6 +115,7 @@ void perform_movement(){
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Performing movement %d", int_itr);
     hold_still();
     data_collected[int_itr] = data_collection();
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Data collected is: %d %d %d", data_collected[int_itr].angle, data_collected[int_itr].range, data_collected[int_itr].motion);
     vibes_short_pulse();
     if(int_itr % 2 != 0){
       send_collected_data();
