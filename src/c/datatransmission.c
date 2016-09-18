@@ -15,6 +15,8 @@ bool comm_is_js_ready(){
 }
 
 void send_collected_data(){
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Sending Angle %d", data_collected);
+  /*APP_LOG(APP_LOG_LEVEL_DEBUG, "Entering send_collected_data");
   DictionaryIterator *outmsg_iter;
   int original_flag = 0;
   
@@ -42,8 +44,9 @@ void send_collected_data(){
   else{
     //Outbox cannot be used at the moment
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Error preparing the outbox: %d", result);
-  }
+  }*/
 }
+
 /*
 void message_inbox_received(DictionaryIterator *iterator, void *context){
   Tuple *ready_tuple = dict_find(iterator, MESSAGE_KEY_JSReady);
