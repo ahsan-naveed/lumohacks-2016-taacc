@@ -115,6 +115,7 @@ void perform_movement(){
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Performing movement %d", int_itr);
     hold_still();
     data_collected[int_itr] = data_collection();
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Data collected is: %d %d %d", data_collected[int_itr].angle, data_collected[int_itr].range, data_collected[int_itr].motion);
     vibes_short_pulse();
     if(int_itr % 2 != 0){
       send_collected_data();

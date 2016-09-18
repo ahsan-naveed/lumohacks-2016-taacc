@@ -4,7 +4,6 @@
 #include "testingwindow.h"
 #include "datacollection.h"
 #include "datatransmission.h"
-#include "collectiondata.h"
 
 
 static void accel_raw_handler(AccelData *data, uint32_t num_samples);
