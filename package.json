@@ -2,9 +2,9 @@
     "author": "tristanm@sfu.ca",
     "dependencies": {},
     "keywords": [],
-    "name": "test-project",
+    "name": "range-of-motion",
     "pebble": {
-        "displayName": "Test Project",
+        "displayName": "Lumohacks Range of Motion",
         "enableMultiJS": true,
         "messageKeys": [],
         "projectType": "native",
@@ -12,6 +12,11 @@
             "media": []
         },
         "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk"
+        ],
         "uuid": "041556f5-ae0d-4b44-8768-feb3e9cb2b5e",
         "watchapp": {
             "watchface": false

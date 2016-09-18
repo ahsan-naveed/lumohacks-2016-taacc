@@ -19,6 +19,8 @@ int main(void){
 void window_click_handler(ClickRecognizerRef recognizer, void *context){
   if(window_stack_contains_window(s_instruction_window)){
     window_stack_push(s_test_window, true);
+    //Start logic
+    persistent_storage_decision();
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Pushed test window to top");
   }
   else{
@@ -39,6 +41,10 @@ void window_click_provider(Window *window){
 
 
 static void init(){
+  //Largest expected inbox and outbox message sizes
+  const uint32_t inbox_size = 64;
+  const uint32_t outbox_size = 256;
+  
   //Create main window element and assign it to the pointer
   s_main_window = window_create();
   s_instruction_window = window_create();
@@ -65,7 +71,12 @@ static void init(){
   window_set_click_config_provider(s_main_window, (ClickConfigProvider) window_click_provider);
   window_set_click_config_provider(s_instruction_window, (ClickConfigProvider) window_click_provider);
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialized");
+  //Open app messaging
+  
+  app_message_open(inbox_size, outbox_size);
+  
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Application Initialized");
+
 }
 
 static void deinit(){
