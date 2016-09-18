@@ -1,11 +1,12 @@
 #include <pebble.h>
- 
+#include "CollectionData.h"
+
 static Window* window;
 static TextLayer *accel_layer, *compass_layer;
 
 static void window_load(Window *window)
 {
-  Setup Accel Layer
+  //Setup Accel Layer
     accel_layer = text_layer_create(GRect(5, 45, 144, 30));
   compass_layer = text_layer_create(GRect(5, 15, 144, 30));
   text_layer_set_font(accel_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
